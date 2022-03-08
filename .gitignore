@@ -1,0 +1,4 @@
+# dependencies
+/rocketnodejsapi/node_modules
+/rocketchat/data
+/rocketchat/uploads
