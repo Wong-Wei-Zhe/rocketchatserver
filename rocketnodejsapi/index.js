@@ -101,13 +101,16 @@ app.post("/rocket_sso", function (req, res) {
                 if (response.data.status === "success") {
                   req.session.userauthtoken = response.data.data.authToken;
                   req.session.save();
-                  res.set("Content-Type", "text/html");
-                  res.send(`<script>
-                  window.parent.postMessage({
-                  	event: 'login-with-token',
-                  	loginToken: '${response.data.data.authToken}'
-                  }, 'http://localhost:3005'); // rocket.chat's URL
-                  </script>`);
+                  res.set("Content-Type", "application/json");
+                  res
+                    .status(200)
+                    .send({ loginToken: response.data.data.authToken });
+                  // res.send(`<script>
+                  // window.parent.postMessage({
+                  // 	event: 'login-with-token',
+                  // 	loginToken: '${response.data.data.authToken}'
+                  // }, 'http://localhost:3005'); // rocket.chat's URL
+                  // </script>`);
                 }
               });
           }
@@ -134,13 +137,17 @@ app.post("/rocket_sso", function (req, res) {
             if (response.data.status === "success") {
               req.session.userauthtoken = response.data.data.authToken;
               req.session.save();
-              res.set("Content-Type", "text/html");
-              res.send(`<script>
-				window.parent.postMessage({
-					event: 'login-with-token',
-					loginToken: '${response.data.data.authToken}'
-				}, 'http://localhost:3005'); // rocket.chat's URL
-				</script>`);
+              res.set("Content-Type", "application/json");
+              res
+                .status(200)
+                .send({ loginToken: response.data.data.authToken });
+              //       res.set("Content-Type", "text/html");
+              //       res.send(`<script>
+              // window.parent.postMessage({
+              // 	event: 'login-with-token',
+              // 	loginToken: '${response.data.data.authToken}'
+              // }, 'http://localhost:3005'); // rocket.chat's URL
+              // </script>`);
             }
           })
           .catch(function (error) {
@@ -151,7 +158,7 @@ app.post("/rocket_sso", function (req, res) {
 });
 
 app.post("/rocket_auth_get", function (req, res) {
-  res.send({
+  res.status(200).send({
     loginToken: req.session.userauthtoken,
   });
 });
