@@ -1,5 +1,6 @@
 var express = require("express");
 var session = require("express-session");
+const cors = require("cors");
 var app = express();
 var bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -13,7 +14,7 @@ var store = new MongoDBStore({
 });
 app.use(
   session({
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    secret: "dfwoiefewwnecwencwnfhrgfgrfrty84fwir767",
     saveUninitialized: false,
     cookie: { maxAge: 86400000 },
     resave: false,
@@ -24,9 +25,9 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const rocketAdmToken = "4rxe25g2uQ-o3VJeAW5hZlDhS26K2XNYSHWXm0RuZ-n";
-const rocketAdmId = "QTsScxbo2sEnSmLmS";
-const ROCKETCHAT_SERVER = "http://localhost:3005/";
+const rocketAdmToken = "v6NXIvR02JMdnFkH_iGqj_IamFH8fM_v5Xbh5g5Bgou";
+const rocketAdmId = "qZAXL5edmFjHgkXba";
+const ROCKETCHAT_SERVER = "http://159.223.32.155/3005/";
 const ROCKETCHAT_API = `${ROCKETCHAT_SERVER}api/v1/`;
 const axiosConfig = {
   headers: {
@@ -35,24 +36,23 @@ const axiosConfig = {
   },
 };
 
-app.use((req, res, next) => {
-  let allowedOrigins = [
-    "http://192.168.100.164:3001",
-    "http://192.168.100.164:3005",
-  ];
-  let origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin);
-  }
-  //res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Access-Control-Allow-Headers, Origin , Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
-  );
+app.use(cors());
 
-  next();
-});
+// app.use((req, res, next) => {
+//   let allowedOrigins = ["http://localhost:3001", "http://159.223.32.155:3005"];
+//   let origin = req.headers.origin;
+//   if (allowedOrigins.includes(origin)) {
+//     res.header("Access-Control-Allow-Origin", origin);
+//   }
+//   //res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Access-Control-Allow-Headers, Origin , Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+//   );
+
+//   next();
+// });
 
 app.post("/getuser", function (req, res) {
   if (req.body.username) {
