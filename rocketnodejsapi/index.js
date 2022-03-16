@@ -1,8 +1,6 @@
 var express = require("express");
 var session = require("express-session");
 const cors = require("cors");
-var util = require("util");
-var encoder = new util.TextEncoder("utf-8");
 var app = express();
 var bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
