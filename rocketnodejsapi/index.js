@@ -6,12 +6,12 @@ var bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 var axios = require("axios");
 const { response } = require("express");
-var MongoDBStore = require("connect-mongodb-session")(session);
-var store = new MongoDBStore({
-  uri: "mongodb://localhost:27017/connect_mongodb_session_test",
-  collection: "mySessions",
-  ttl: 86400000,
-});
+// var MongoDBStore = require("connect-mongodb-session")(session);
+// var store = new MongoDBStore({
+//   uri: "mongodb://localhost:27017/connect_mongodb_session_test",
+//   collection: "mySessions",
+//   ttl: 86400000,
+// });
 app.use(
   session({
     secret: "dfwoiefewwnecwencwnfhrgfgrfrty84fwir767",
