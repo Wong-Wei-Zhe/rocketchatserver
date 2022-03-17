@@ -1,6 +1,5 @@
 var express = require("express");
 var session = require("express-session");
-const cors = require("cors");
 var app = express();
 var bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -27,7 +26,9 @@ app.use(bodyParser.json());
 
 const rocketAdmToken = "v6NXIvR02JMdnFkH_iGqj_IamFH8fM_v5Xbh5g5Bgou";
 const rocketAdmId = "qZAXL5edmFjHgkXba";
-const ROCKETCHAT_SERVER = "http://159.223.32.155/3005/";
+// const rocketAdmToken = "7X8ymH2ccUhdfju01XPi4SPSfrwGG1syxToD5pCuVQY";
+// const rocketAdmId = "QTsScxbo2sEnSmLmS";
+const ROCKETCHAT_SERVER = "http://159.223.32.155:3005/";
 const ROCKETCHAT_API = `${ROCKETCHAT_SERVER}api/v1/`;
 const axiosConfig = {
   headers: {
@@ -36,25 +37,30 @@ const axiosConfig = {
   },
 };
 
-app.use(cors());
+app.use((req, res, next) => {
+  let allowedOrigins = [
+    "http://localhost:3001",
+    "http://localhost:3000",
+    "http://localhost:3005",
+    "http://159.223.32.155:3005",
+    "http://192.168.100.164:3005",
+  ];
+  let origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
+  //res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin , Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+  );
 
-// app.use((req, res, next) => {
-//   let allowedOrigins = ["http://localhost:3001", "http://159.223.32.155:3005"];
-//   let origin = req.headers.origin;
-//   if (allowedOrigins.includes(origin)) {
-//     res.header("Access-Control-Allow-Origin", origin);
-//   }
-//   //res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Credentials", "true");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Access-Control-Allow-Headers, Origin , Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
-//   );
-
-//   next();
-// });
+  next();
+});
 
 app.post("/getuser", function (req, res) {
+  console.log(req.body.username);
   if (req.body.username) {
     axios
       .get(
@@ -67,7 +73,11 @@ app.post("/getuser", function (req, res) {
         }
       })
       .catch(function (error) {
-        res.status(404).send(error.response.data.error);
+        if (error.code || error.response.status === 401) {
+          res.status(500).send("Something went wrong");
+        } else {
+          res.status(404).send("Not Found");
+        }
       });
   } else {
     res.status(400).send("Bad Request");

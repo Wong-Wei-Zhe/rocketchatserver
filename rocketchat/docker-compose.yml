@@ -21,7 +21,7 @@ services:
     depends_on: [mongo]
     ports:
       - target: ${PORT:-3000}
-        published: ${ROCKET_HOST_PORT:-3000}
+        published: ${ROCKET_HOST_PORT:-3005}
         protocol: tcp
         mode: host
 
