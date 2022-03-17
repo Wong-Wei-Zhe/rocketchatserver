@@ -24,11 +24,14 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const rocketAdmToken = "pC1BKq13TCRimLWWDMvNTFlMJBnejiJpz2DF8oWPfyp";
-const rocketAdmId = "PYdJzWSiEMgahwCms";
+const rocketAdmToken = "UwpWQOWxw7ksZXOBeAd58MXRj3xng9RtpS2pUN5GWaf";
+const rocketAdmId = "MRF2rAzAuzZu4LHhx";
+// const rocketAdmToken = "pC1BKq13TCRimLWWDMvNTFlMJBnejiJpz2DF8oWPfyp";
+// const rocketAdmId = "PYdJzWSiEMgahwCms";
 // const rocketAdmToken = "7X8ymH2ccUhdfju01XPi4SPSfrwGG1syxToD5pCuVQY";
 // const rocketAdmId = "QTsScxbo2sEnSmLmS";
-const ROCKETCHAT_SERVER = "http://157.245.199.211:3005/";
+const ROCKETCHAT_SERVER =
+  "http://ec2-52-221-189-46.ap-southeast-1.compute.amazonaws.com:3005/";
 const ROCKETCHAT_API = `${ROCKETCHAT_SERVER}api/v1/`;
 const axiosConfig = {
   headers: {

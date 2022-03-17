@@ -26,6 +26,7 @@ services:
 
   mongo:
     image: bitnami/mongodb:4.4
+    command: sudo chown -R 1001 /data
     volumes:
       - data:/bitnami/mongodb
     environment:
