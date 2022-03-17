@@ -9,6 +9,16 @@ volumes:
   nodejsvol:
 
 services:
+  nodejs:
+    build: ./rocketnodejsapi
+    command: npm start
+    volumes:
+      - nodejsvol:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - 3032:3032
+    depends_on: [rocketchat]
+
   rocketchat:
     image: rocket.chat:4.5.0
     restart: on-failure
@@ -44,15 +54,6 @@ services:
       MONGODB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
       MONGODB_USERNAME: ${MONGODB_USERNAME}
       MONGODB_PASSWORD: ${MONGODB_PASSWORD}
-
-  nodejs:
-    build: ./rocketnodejsapi
-    command: npm start
-    volumes:
-      - nodejsvol:/usr/app/
-      - /usr/app/node_modules
-    ports:
-      - 3032:3032
 
 networks:
   rocketchatapp:
