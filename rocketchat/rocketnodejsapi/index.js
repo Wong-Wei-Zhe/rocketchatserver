@@ -78,7 +78,8 @@ app.post("/getuser", function (req, res) {
       })
       .catch(function (error) {
         if (error.code || error.response.status === 401) {
-          res.status(500).send("Something went wrong");
+          //res.status(500).send("Something went wrong");
+          res.status(500).send(error);
         } else {
           res.status(404).send("Not Found");
         }
