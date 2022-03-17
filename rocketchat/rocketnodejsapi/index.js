@@ -24,8 +24,8 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const rocketAdmToken = "v6NXIvR02JMdnFkH_iGqj_IamFH8fM_v5Xbh5g5Bgou";
-const rocketAdmId = "qZAXL5edmFjHgkXba";
+const rocketAdmToken = "pC1BKq13TCRimLWWDMvNTFlMJBnejiJpz2DF8oWPfyp";
+const rocketAdmId = "PYdJzWSiEMgahwCms";
 // const rocketAdmToken = "7X8ymH2ccUhdfju01XPi4SPSfrwGG1syxToD5pCuVQY";
 // const rocketAdmId = "QTsScxbo2sEnSmLmS";
 const ROCKETCHAT_SERVER = "http://157.245.199.211:3005/";
