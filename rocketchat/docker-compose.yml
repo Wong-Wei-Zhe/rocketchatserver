@@ -6,6 +6,7 @@ x-aws-loadbalancer: ${AWS_ELB}
 volumes:
   uploads:
   data:
+  nodejsvol:
 
 services:
   rocketchat:
@@ -43,6 +44,15 @@ services:
       MONGODB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
       MONGODB_USERNAME: ${MONGODB_USERNAME}
       MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+
+  nodejs:
+    build: ./rocketnodejsapi
+    command: npm start
+    volumes:
+      - nodejsvol:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - 3032:3032
 
 networks:
   rocketchatapp:
