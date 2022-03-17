@@ -28,7 +28,7 @@ const rocketAdmToken = "v6NXIvR02JMdnFkH_iGqj_IamFH8fM_v5Xbh5g5Bgou";
 const rocketAdmId = "qZAXL5edmFjHgkXba";
 // const rocketAdmToken = "7X8ymH2ccUhdfju01XPi4SPSfrwGG1syxToD5pCuVQY";
 // const rocketAdmId = "QTsScxbo2sEnSmLmS";
-const ROCKETCHAT_SERVER = "http://159.223.32.155:3005/";
+const ROCKETCHAT_SERVER = "http://157.245.199.211:3005/";
 const ROCKETCHAT_API = `${ROCKETCHAT_SERVER}api/v1/`;
 const axiosConfig = {
   headers: {
@@ -42,7 +42,7 @@ app.use((req, res, next) => {
     "http://localhost:3001",
     "http://localhost:3000",
     "http://localhost:3005",
-    "http://159.223.32.155:3005",
+    "http://157.245.199.211:3005",
     "http://192.168.100.164:3005",
   ];
   let origin = req.headers.origin;
