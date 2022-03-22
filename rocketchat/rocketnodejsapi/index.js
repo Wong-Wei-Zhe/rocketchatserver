@@ -5,25 +5,20 @@ var bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 var axios = require("axios");
 const { response } = require("express");
-// var MongoDBStore = require("connect-mongodb-session")(session);
-// var store = new MongoDBStore({
-//   uri: "mongodb://localhost:27017/connect_mongodb_session_test",
-//   collection: "mySessions",
-//   ttl: 86400000,
-// });
+
 app.use(
   session({
     secret: "dfwoiefewwnecwencwnfhrgfgrfrty84fwir767",
     saveUninitialized: false,
     cookie: { maxAge: 86400000 },
     resave: false,
-    //store: store,
   })
 );
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//Bad Practice, included token here to easier testing. Token info should be injected by environment variable
 const rocketAdmToken = "UwpWQOWxw7ksZXOBeAd58MXRj3xng9RtpS2pUN5GWaf";
 const rocketAdmId = "MRF2rAzAuzZu4LHhx";
 // const rocketAdmToken = "pC1BKq13TCRimLWWDMvNTFlMJBnejiJpz2DF8oWPfyp";
@@ -41,12 +36,16 @@ const axiosConfig = {
 };
 
 app.use((req, res, next) => {
+  //Multiple whitelist for ease of testing,
+  //Best practice to limit only production origin
   let allowedOrigins = [
     "http://localhost:3001",
     "http://localhost:3000",
     "http://localhost:3005",
     "http://157.245.199.211:3005",
     "http://192.168.100.164:3005",
+    "http://52.221.189.46:8080",
+    "http://ec2-52-221-189-46.ap-southeast-1.compute.amazonaws.com:8080",
   ];
   let origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
@@ -62,10 +61,12 @@ app.use((req, res, next) => {
   next();
 });
 
+//Server health check
 app.get("/", function (req, res) {
   res.status(200).send("OK");
 });
 
+//API to check if username exist, admin authority token required
 app.post("/getuser", function (req, res) {
   console.log(req.body.username);
   if (req.body.username) {
@@ -92,6 +93,7 @@ app.post("/getuser", function (req, res) {
   }
 });
 
+//Perform automated login, signup with single API call
 app.post("/rocket_sso", function (req, res) {
   var userPayload = {
     username: req.body.username,
@@ -181,12 +183,14 @@ app.post("/rocket_sso", function (req, res) {
   }
 });
 
+//API to request existing authentication token for running session
 app.post("/rocket_auth_get", function (req, res) {
   res.status(200).send({
     loginToken: req.session.userauthtoken,
   });
 });
 
+//API for rocket chat to retrieve IFrame for same server hosting
 app.post("/rocket_iframe", function (req, res) {
   return res.send(`<script>
 				window.parent.postMessage({
@@ -196,24 +200,20 @@ app.post("/rocket_iframe", function (req, res) {
 				</script>`);
 });
 
+//API to check if channel exists
 app.post("/rocket_check_channel", function (req, res) {
+  // On Hold, priority on client fixes
   console.log("WIP");
 });
 
+//API to create new public channel
 app.post("/rocket_create_channel", function (req, res) {
+  // On Hold, priority on client fixes
   console.log("WIP");
 });
 
+//Server test API to verify session functionality
 app.get("/testapi", function (req, res) {
-  if (req.session.userdata) {
-    res.send("not first time");
-  } else {
-    req.session.userdata = "hehe";
-    res.send("first time");
-  }
-});
-
-app.get("/testapiapi", function (req, res) {
   if (req.session.userdata) {
     res.send("not first time");
   } else {
